@@ -1,0 +1,166 @@
+<div class="container">
+    <div class="row" ng-show="isLoggedIn == false">
+        <h1 style="text-align: center;">YOU NEED TO BE LOGGED IN FIRST</h1>
+    </div>
+
+    <div class="row" style="margin-top: 10px;" ng-hide="isLoggedIn == false">
+
+        <div class="col-xs-12 col-sm-6 col-md-4">
+            <input type="search" class="form-control" placeholder="Search product" ng-model="SearchFilter"> <br>
+            <button class="btn btn-info form-control" ng-click="showForm()">ADD A PRODUCT</button>
+            <form action="" class="well" style="display: none;" ng-submit="addProduct()">
+                <div class="form-group">
+                    <label for=""> name: </label>
+                    <input type="text" name="" id="" class="form-control" ng-model="name">
+                </div>
+                <div class="form-group">
+                    <label for=""> section: </label>
+                    <input type="text" name="" id="" class="form-control" ng-model="section">
+                </div>
+                <div class="form-group">
+                    <label for=""> quantity </label>
+                    <input type="number" name="" id="" class="form-control" ng-model="quantity">
+                </div>
+                <div class="form-group">
+                    <label for=""> price </label>
+                    <input type="number" name="" id="" class="form-control" ng-model="price">
+                </div>
+                <div class="form-group">
+                    <label for=""> description </label>
+                    <textarea name="" id="" cols="30" rows="5" class="form-control" ng-model="description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for=""> image </label>
+                    <input type="file" name="" id="" class="" mds-file file="x" base64="y">
+                    <img src="{{y}}" alt="" width="100%">
+                </div>
+                <button class="btn btn-success form-control"> ADD</button>
+            </form>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-8">
+            <ul class="nav nav-tabs" ng-model="productSection">
+                <li class="active">
+                    <a href="#elect" ng-click="$event.preventDefault(); productSection = 'electrics'"
+                        data-toggle="tab">Electrics</a>
+                </li>
+                <li><a href="#phone" ng-click="$event.preventDefault(); productSection = 'phones'"
+                        data-toggle="tab">Phones</a>
+                </li>
+                <li><a href="#laptop" ng-click="$event.preventDefault(); productSection = 'laptops'"
+                        data-toggle="tab">laptops</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div id="elect" class="tab-pane fade active in">
+                    <h1>Electrics</h1>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 thumbnail"
+                            ng-repeat="product in products|sectionFilter:productSection|filter:SearchFilter">
+                            <img src="{{product.image}}" style="width: 100%;height:200px">
+                            <div class="caption bg-info" style="height: 250px;">
+                                <h4>{{product.name}} </h4>
+                                <p style="float: right">{{product.price|currency}}</p>
+                                <p>{{product.description.substring(0,20)}}...</p>
+                                {{product.quantity}} item(s). <span style="float: right;">{{product.section}}</span>
+
+                                <button class="btn btn-info btn-block" ng-click="addToCart(product)">ADD TO
+                                    CART</button>
+                                <button class="btn btn-warning btn-block"
+                                    ng-click="preEdit(product, $index)">EDIT</button>
+                                EDIT IMAGE:
+                                <input type="file" mds-file file="x" base64="y"
+                                    mds-change="preEditProductImage(file,product.id)">
+                                <button class="btn btn-danger btn-block"
+                                    ng-click="deleteProduct(product)">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="phone" class="tab-pane fade">
+                    <h1>Phones</h1>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 thumbnail"
+                            ng-repeat="product in products|sectionFilter:productSection|filter:SearchFilter">
+                            <img src="{{product.image}}" style="width: 100%;height:200px">
+                            <div class="caption bg-info" style="height: 250px;">
+                                <h4>{{product.name}} </h4>
+                                <p style="float: right">{{product.price|currency}}</p>
+                                <p>{{product.description.substring(0,20)}}...</p>
+                                {{product.quantity}} item(s). <span style="float: right;">{{product.section}}</span>
+
+                                <button class="btn btn-warning btn-block"
+                                    ng-click="preEdit(product, $index)">EDIT</button>
+                                <p>EDIT IMAGE:</p>
+                                <input type="file" mds-file file="x" base64="y"
+                                    mds-change="preEditProductImage(file,product.id)">
+                                <button class="btn btn-danger btn-block"
+                                    ng-click="deleteProduct(product)">Delete</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="laptop" class="tab-pane fade">
+                    <h1>Laptops</h1>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 thumbnail"
+                            ng-repeat="product in products|sectionFilter:productSection|filter:SearchFilter">
+                            <img src="{{product.image}}" style="width: 100%;height:200px">
+                            <div class="caption bg-info" style="height: 250px;">
+                                <h4>{{product.name}} </h4>
+                                <p style="float: right">{{product.price|currency}}</p>
+                                <p>{{product.description.substring(0,20)}}...</p>
+                                {{product.quantity}} item(s). <span style="float: right;">{{product.section}}</span>
+
+                                <button class="btn btn-warning btn-block"
+                                    ng-click="preEdit(product, $index)">EDIT</button>
+                                <p>EDIT IMAGE:</p>
+                                <input type="file" mds-file file="x" base64="y"
+                                    mds-change="preEditProductImage(file,product.id)">
+                                <button class="btn btn-danger btn-block"
+                                    ng-click="deleteProduct(product)">Delete</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="myModal" class="modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            Edit Product
+                        </div>
+                        <div class="modal-body">
+
+                            <form class="well" ng-submit="editProduct()">
+                                <div class="form-group">
+                                    <label>Name</label>
+                                    <input type="text" class="form-control" ng-model="selectedProduct.name">
+                                </div>
+                                <div class="form-group">
+                                    <label>section</label>
+                                    <input type="text" class="form-control" ng-model="selectedProduct.section">
+                                </div>
+                                <div class="form-group">
+                                    <label>quantity</label>
+                                    <input type="number" class="form-control" ng-model="selectedProduct.quantity">
+                                </div>
+                                <div class="form-group">
+                                    <label>price</label>
+                                    <input type="number" class="form-control" ng-model="selectedProduct.price">
+                                </div>
+                                <div class="form-group">
+                                    <label for=""> description </label>
+                                    <textarea name="" id="" cols="30" rows="5" class="form-control"
+                                        ng-model="selectedProduct.description"></textarea>
+                                </div>
+                                <button class="btn btn-success form-control">Update</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
